@@ -43,4 +43,24 @@ class BaseController extends Controller
 
         return response()->json($response, $code);
     }
+
+    public function sendPaginatedResponse($paginator, $message = 'Data fetched successfully', $code = 200)
+{
+    return response()->json([
+        'success' => true,
+        'status' => $code,
+        'message' => $message,
+        'data' => $paginator->items(),
+        'pagination' => [
+            'current_page' => $paginator->currentPage(),
+            'last_page' => $paginator->lastPage(),
+            'per_page' => $paginator->perPage(),
+            'total' => $paginator->total(),
+            'from' => $paginator->firstItem(),
+            'to' => $paginator->lastItem(),
+            'next_page_url' => $paginator->nextPageUrl(),
+            'prev_page_url' => $paginator->previousPageUrl(),
+        ]
+    ], $code);
+}
 }
