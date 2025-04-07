@@ -42,3 +42,7 @@ php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
 6️⃣Run Migrations
 php artisan migrate
 
+7️⃣Start the Development Server
+php artisan serve
+
+
