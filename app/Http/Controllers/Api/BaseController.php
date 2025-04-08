@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Mail\GenericEmail;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Controllers\Controller as Controller;
 
 class BaseController extends Controller
@@ -63,4 +65,20 @@ class BaseController extends Controller
         ]
     ], $code);
 }
+
+
+public function sendMail($to, $subject, $view, $data = [])
+{
+    try {
+        Mail::to($to)->send(new GenericEmail($subject, $view, $data));
+
+        // ✅ Return success response
+        return $this->sendResponse(null, 'Email sent successfully', 200);
+
+    } catch (\Exception $e) {
+        // ❌ Return error response
+        return $this->sendError('Mail Sending Failed', ['error' => $e->getMessage()], 500);
+    }
+}
+
 }

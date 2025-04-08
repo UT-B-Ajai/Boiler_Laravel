@@ -77,7 +77,22 @@ class UserController extends BaseController
                 $user->assignRole($role);
             }
 
+            $this->sendMail(
+                $user->email,
+                'Welcome to Our Platform',
+                'emails.generic',
+                [
+                    'title' => $user->first_name,
+                    'message' => 'Your account has been created successfully.',
+                    'subject' => 'Welcome!'
+                ]
+            );
+
+            // ✅ Return user creation response
             return $this->sendResponse($user->load('roles'), 'User created successfully', 201);
+
+
+
         } catch (\Exception $e) {
             return $this->sendError('Something went wrong', ['error' => $e->getMessage()], 500);
         }

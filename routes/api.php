@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MailController;
 use App\Http\Controllers\Api\AuthController;
-use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PermissionController;
 
 // 🔐 Public Auth Routes
@@ -27,4 +28,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('permissions', PermissionController::class);
     Route::post('assign-permissions', [ PermissionController::class, 'assignPermissions']);
     Route::post('revoke-permissions', [ PermissionController::class, 'revokePermissions']);
+
+    Route::post('/send-mail', [MailController::class, 'sendCustomMail']);
+
 });
